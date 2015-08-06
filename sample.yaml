@@ -1,0 +1,29 @@
+---
+dirPrefix: "/theRoot"
+passwordDirPrefix: "/private/etc/apache2"
+dirs:
+  -
+    dir: "junk/all"
+    user: "1"
+    userFile: "file1"
+    scope:
+      - "all"
+  -
+    dir: "verbatim/deal"
+    user: "2"
+    userFile: "file2"
+    scope:
+      - "verbatim"
+  -
+    dir: "only/media"
+    user: "3"
+    userFile: "file3"
+    scope:
+      - "media"
+  -
+    dir: "some/selected"
+    user: "4"
+    userFile: "file4"
+    scope:
+      - "data-orig"
+      - "data"

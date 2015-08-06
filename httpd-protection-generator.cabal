@@ -1,0 +1,58 @@
+name:                httpd-protection-generator
+version:             0.1.0.0
+synopsis:            Generate httpd protection directives
+description:         Generate httpd protection directives
+homepage:            https://github.com/TalkBank/httpd-protection-generator
+license:             BSD3
+license-file:        LICENSE
+author:              Franklin Chen
+maintainer:          franklinchen@franklinchen.com
+copyright:           Franklin Chen
+category:            Configuration
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  default-language:    Haskell2010
+  hs-source-dirs:      src
+  ghc-options:         -Wall
+  exposed-modules:     GenerateConf
+  build-depends:       base >= 4 && <= 5
+                     , text
+                     , directory
+                     , yaml
+                     , pipes
+                     , mtl
+
+executable generate-httpd-protections
+  default-language:    Haskell2010
+  main-is:             generate-httpd-protections.hs
+  ghc-options:         -Wall
+  build-depends:       base >= 4 && <= 5
+                     , text
+                     , directory
+                     , yaml
+                     , pipes
+                     , mtl
+                     , httpd-protection-generator
+
+test-suite spec
+  type: exitcode-stdio-1.0
+  default-language:    Haskell2010
+  hs-source-dirs:      test
+  ghc-options:         -Wall
+  main-is:             Spec.hs
+  build-depends:       base >= 4 && <= 5
+                     , text
+                     , directory
+                     , yaml
+                     , pipes
+                     , mtl
+                     , httpd-protection-generator
+                     , hspec
+                     , QuickCheck
+
+source-repository head
+  type:                 git
+  location:             https://github.com/TalkBank/httpd-protection-generator
