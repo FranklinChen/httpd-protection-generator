@@ -7,6 +7,7 @@ This is used for the TalkBank project.
 ## Building
 
 ```console
+$ cabal install --only-dependencies --enable-tests
 $ cabal configure
 $ cabal install
 ```
