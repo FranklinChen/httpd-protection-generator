@@ -80,3 +80,9 @@ $ generate-httpd-protections protection.yaml httpd-protections.conf
 ```
 
 You may need to use `sudo` if generating into `/etc/apache2/other/`.
+
+This program only sets up the Apache 2 configuration. To create or modify a password file, use `htpasswd`, e.g., to add a new user:
+
+```console
+$ htpasswd passwords-file user
+```
