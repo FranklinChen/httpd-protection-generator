@@ -13,6 +13,10 @@ import Control.Monad
 import Control.Monad.Reader
 import Pipes
 
+-- For GHC < 7.10
+import Data.Traversable (traverse)
+import Control.Applicative ((<$>))
+
 -- | Warning when analyzing config file.
 type Warning = String
 

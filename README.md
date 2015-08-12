@@ -17,6 +17,8 @@ The resulting executable will be at
 your path as `generate-httpd-protections` if your `PATH` is already set
 correctly to include `~/.cabal/bin`.
 
+### TODO: Alternate build instructions using [Stack](http://hackage.haskell.org/package/stack)
+
 ## Usage
 
 Run on a YAML file to get an Apache 2 config file.
