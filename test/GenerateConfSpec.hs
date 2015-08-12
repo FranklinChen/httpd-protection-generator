@@ -17,9 +17,14 @@ main = hspec spec
 
 spec :: Spec
 spec =
-  describe "GenerateConf" $
-    it "parses YAML" $ do
-      parseResult <- decodeFileEither "sample.yaml"
+  describe "GenerateConf" $ do
+    testFiles "sample"
+    testFiles "sample-users"
+
+testFiles :: String -> SpecWith ()
+testFiles baseName =
+    it ("handles file " ++ baseName) $ do
+      parseResult <- decodeFileEither $ yamlFile baseName
       parseResult `shouldSatisfy` isRight
 
       let Right theDoc = parseResult
@@ -28,13 +33,23 @@ spec =
       let config = AppConfig theDoc mockGoodDir
 
       (warnings, result) <- toListM' $ runReaderT directivesOutput config
-      expectedWarnings <- readFile "sample.err"
+      expectedWarnings <- readFile $ errFile baseName
       warnings `shouldBe` lines expectedWarnings
 
-      expected <- readFile "sample.conf"
+      expected <- readFile $ confFile baseName
       result `shouldBe` expected
 
+yamlFile :: String -> FilePath
+yamlFile baseName = baseName ++ ".yaml"
+
+confFile :: String -> FilePath
+confFile baseName = baseName ++ ".conf"
+
+errFile :: String -> FilePath
+errFile baseName = baseName ++ ".err"
+
 -- | My utility, based on 'Pipes.Prelude.toListM'
+-- TODO Remove upon next release of Pipes, since author took it.
 toListM' :: Monad m => Producer a m r -> m ([a], r)
 toListM' = P.fold' step begin done where
   step x a = x . (a:)
