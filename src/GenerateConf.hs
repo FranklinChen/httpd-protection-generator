@@ -43,8 +43,8 @@ instance FromJSON Doc
 -- Use 'String' for simplicity rather than 'Text'.
 data DirInfo =
   DirInfo { dir :: FilePath
-          , user :: String
-          , userFile :: FilePath
+          , users :: [String]
+          , passwordsFile :: FilePath
           , scope :: [JScopeTag]
           }
   deriving (Show, Generic)
@@ -101,8 +101,8 @@ instance ToJSON ScopeTag
 -- | Representation of a single Apache directive.
 data Directive = Directive { label :: String
                            , realDir :: FilePath
-                           , user1 :: String
-                           , userFile1 :: FilePath
+                           , users1 :: [String]
+                           , passwordsFile1 :: FilePath
                            }
                  deriving (Show)
 
@@ -115,8 +115,8 @@ formatDirective theDoc d =
           , "  AllowOverride None"
           , "  AuthType Basic"
           , "  AuthName \"Password protected data for " ++ label d ++ "\""
-          , "  AuthUserFile " ++ passwordDirPrefix theDoc ++ "/" ++ userFile1 d
-          , "  Require user " ++ user1 d
+          , "  AuthUserFile " ++ passwordDirPrefix theDoc ++ "/" ++ passwordsFile1 d
+          , "  Require user " ++ List.intercalate " " (users1 d)
           , "</Directory>"
           ]
 
@@ -150,7 +150,7 @@ generateDirectives info =
 generateDirective :: Monad m => DirInfo -> ScopeTag -> App m Directive
 generateDirective info s = do
   path <- checkDirectory (dir info) s
-  return $ Directive (dir info) path (user info) (userFile info)
+  return $ Directive (dir info) path (users info) (passwordsFile info)
 
 -- | Check existence of directories and warn if nonexistent but
 -- keep going anyway.

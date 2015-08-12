@@ -5,7 +5,9 @@ dirs:
   -
     dir: "junk/all"
     users:
-      - "1"
+      - "junk1"
+      - "junk2"
+      - "junk3"
     passwordsFile: "file1"
     scope:
       - "all"

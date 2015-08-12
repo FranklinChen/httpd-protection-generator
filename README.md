@@ -31,7 +31,7 @@ $ generate-httpd-protections configFile.yaml output.conf
 
 Edit a YAML file describing what is to be protected. An example is
 provided
-[here](https://github.com/TalkBank/httpd-protection-generator/blob/master/sample.yaml):
+[here](https://github.com/TalkBank/httpd-protection-generator/blob/master/sample-users.yaml):
 
 ```yaml
 ---
@@ -40,32 +40,38 @@ passwordDirPrefix: "/private/etc/apache2"
 dirs:
   -
     dir: "junk/all"
-    user: "1"
-    userFile: "file1"
+    users:
+      - "junk1"
+      - "junk2"
+      - "junk3"
+    passwordsFile: "file1"
     scope:
       - "all"
   -
     dir: "verbatim/deal"
-    user: "2"
-    userFile: "file2"
+    users:
+      - "2"
+    passwordsFile: "file2"
     scope:
       - "verbatim"
   -
     dir: "only/media"
-    user: "3"
-    userFile: "file3"
+    users:
+      - "3"
+    passwordsFile: "file3"
     scope:
       - "media"
   -
     dir: "some/selected"
-    user: "4"
-    userFile: "file4"
+    users:
+      - "4"
+    passwordsFile: "file4"
     scope:
       - "data-orig"
       - "data"
 ```
 
-Sample output is [here](https://github.com/TalkBank/httpd-protection-generator/blob/master/sample.yaml).
+Sample output is [here](https://github.com/TalkBank/httpd-protection-generator/blob/master/sample-users.yaml).
 
 ### Run
 
