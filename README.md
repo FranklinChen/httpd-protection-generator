@@ -7,17 +7,13 @@ This is used for the TalkBank project.
 ## Building
 
 ```console
-$ cabal install --only-dependencies --enable-tests
-$ cabal configure
-$ cabal install
+$ stack install
 ```
 
 The resulting executable will be at
-`~/.cabal/bin/generate-httpd-protections` and will automatically be in
+`~/.local/bin/generate-httpd-protections` and will automatically be in
 your path as `generate-httpd-protections` if your `PATH` is already set
-correctly to include `~/.cabal/bin`.
-
-### TODO: Alternate build instructions using [Stack](http://hackage.haskell.org/package/stack)
+correctly to include `~/.local/bin`.
 
 ## Usage
 
