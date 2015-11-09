@@ -32,7 +32,7 @@ testFiles baseName =
       let mockGoodDir _ = return False
       let config = AppConfig theDoc mockGoodDir
 
-      (warnings, result) <- toListM' $ runReaderT directivesOutput config
+      (warnings, result) <- P.toListM' $ runReaderT directivesOutput config
       expectedWarnings <- readFile $ errFile baseName
       warnings `shouldBe` lines expectedWarnings
 
@@ -47,12 +47,3 @@ confFile baseName = baseName ++ ".conf"
 
 errFile :: String -> FilePath
 errFile baseName = baseName ++ ".err"
-
--- | My utility, based on 'Pipes.Prelude.toListM'
--- TODO Remove upon next release of Pipes, since author took it.
-toListM' :: Monad m => Producer a m r -> m ([a], r)
-toListM' = P.fold' step begin done where
-  step x a = x . (a:)
-  begin = id
-  done x = x []
-{-# INLINABLE toListM' #-}
