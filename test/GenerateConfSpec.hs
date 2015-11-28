@@ -7,7 +7,6 @@ import Control.Monad.Reader
 import Data.Either (isRight)
 import Data.Yaml (decodeFileEither)
 
-import Pipes
 import qualified Pipes.Prelude as P
 
 import GenerateConf (AppConfig(..), directivesOutput)
