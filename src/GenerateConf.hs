@@ -92,8 +92,6 @@ instance FromJSON ScopeTag where
   parseJSON (String s) = fail $ invalidScopeTag $ Text.unpack s
   parseJSON x = fail $ invalidScopeTag $ show x
 
-instance ToJSON ScopeTag
-
 -- | Representation of a single Apache directive.
 data Directive = Directive { label :: String
                            , realDir :: FilePath
