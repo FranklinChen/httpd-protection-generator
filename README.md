@@ -75,10 +75,16 @@ Sample output is [here](https://github.com/TalkBank/httpd-protection-generator/b
 $ generate-httpd-protections protection.yaml httpd-protections.conf
 ```
 
-You may need to use `sudo` if generating into `/etc/apache2/other/`.
-
-This program only sets up the Apache 2 configuration. To create or modify a password file, use `htpasswd`, e.g., to add a new user:
+You may need to use `sudo` if generating into `/etc/apache2/other/`, e.g.,
 
 ```console
-$ htpasswd passwords-file user
+$ sudo generate-httpd-protections protection.yaml httpd-protections.conf
 ```
+
+This program only sets up the Apache 2 configuration. To create or modify a password file, use `htpasswd`, e.g., to add a new user, e.g.:
+
+```console
+$ sudo htpasswd my-passwords-file my-new-user
+```
+
+(enter in `sudo` password, then the new Apache user's password)
