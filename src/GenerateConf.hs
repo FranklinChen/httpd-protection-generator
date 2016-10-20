@@ -93,6 +93,7 @@ instance FromJSON ScopeTag where
   parseJSON x = fail $ invalidScopeTag $ show x
 
 -- | Representation of a single Apache directive.
+-- realDir is relative to the doc root.
 data Directive = Directive { label :: String
                            , realDir :: FilePath
                            , users1 :: [String]
@@ -100,11 +101,15 @@ data Directive = Directive { label :: String
                            }
                  deriving (Show)
 
+-- | Absolute directory path.
+absoluteDir :: Doc -> Directive -> String
+absoluteDir theDoc d = dirPrefix theDoc ++ "/" ++ realDir d
+
 -- | Simple-minded, rather than with a template engine.
 formatDirective :: Doc -> Directive -> String
 formatDirective theDoc d =
-  unlines [ "# " ++ realDir d
-          , "<Directory \"" ++ caseInsensitive (realDir d) ++ "/\">"
+  unlines [ "# " ++ absoluteDir theDoc d
+          , "<Directory \"" ++ caseInsensitive (absoluteDir theDoc d) ++ "/\">"
           , "  Options Includes Indexes FollowSymLinks MultiViews"
           , "  AllowOverride None"
           , "  AuthType Basic"
@@ -151,19 +156,20 @@ generateDirective info s = do
 checkDirectory :: Monad m => FilePath -> ScopeTag -> App m FilePath
 checkDirectory d s = do
   AppConfig theDoc checkGoodDir <- ask
-  let path = realDirectory theDoc d s
+  let relDir = realDirectory d s
+  let path = dirPrefix theDoc ++ "/" ++ relDir
   exists <- lift $ lift $ checkGoodDir path
   unless exists $
     lift $ yield $ "###### Warning: " ++ path ++ " does not exist!"
-  return path
+  return relDir
 
--- | Compute the real directory being protected.
-realDirectory :: Doc -> FilePath -> ScopeTag -> FilePath
-realDirectory theDoc d Verbatim = dirPrefix theDoc ++ "/" ++ d
-realDirectory theDoc d DataOrig = dirPrefix theDoc ++ "/data-orig/" ++ d
-realDirectory theDoc d Data = dirPrefix theDoc ++ "/data/" ++ d
-realDirectory theDoc d DataXml = dirPrefix theDoc ++ "/data-xml/" ++ d
-realDirectory theDoc d Media = dirPrefix theDoc ++ "/media/" ++ d
+-- | Compute the (relative) real directory being protected.
+realDirectory :: FilePath -> ScopeTag -> FilePath
+realDirectory d Verbatim = d
+realDirectory d DataOrig = "data-orig/" ++ d
+realDirectory d Data = "data/" ++ d
+realDirectory d DataXml = "data-xml/" ++ d
+realDirectory d Media = "media/" ++ d
 
 -- | Compute scopes
 realScopes :: [JScopeTag] -> [ScopeTag]
@@ -192,3 +198,15 @@ directivesOutput :: Monad m => App m String
 directivesOutput = do
   theDoc <- asks doc
   separateBlocks <$> traverse formatDirInfo (dirs theDoc)
+
+-- | Return all absolute directories to be protected.
+absoluteDirsOutput :: Monad m => App m String
+absoluteDirsOutput = do
+  theDoc <- asks doc
+  separateBlocks <$> traverse absoluteDirInfo (dirs theDoc)
+
+absoluteDirInfo :: Monad m => DirInfo -> App m String
+absoluteDirInfo info = do
+  ds <- generateDirectives info
+  theDoc <- asks doc
+  return $ separateBlocks (absoluteDir theDoc <$> ds)

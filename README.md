@@ -88,3 +88,26 @@ $ sudo htpasswd my-passwords-file my-new-user
 ```
 
 (enter in `sudo` password, then the new Apache user's password)
+
+### show-httpd-protections
+
+There is also a program `show-httpd-protections` that just shows the actual paths being protected:
+
+```console
+$ show-httpd-protections sample.yaml sample.txt
+```
+
+Example output:
+
+```text
+/theRoot/data-orig/junk/all
+/theRoot/data/junk/all
+/theRoot/data-xml/junk/all
+/theRoot/media/junk/all
+/theRoot/verbatim/deal
+/theRoot/media/only/media
+/theRoot/data-orig/some/selected
+/theRoot/data/some/selected
+``` 
+
+This is useful for programs such as `rsync` to ignore protected directories when syncing.
