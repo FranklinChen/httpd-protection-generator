@@ -199,14 +199,13 @@ directivesOutput = do
   theDoc <- asks doc
   separateBlocks <$> traverse formatDirInfo (dirs theDoc)
 
--- | Return all absolute directories to be protected.
-absoluteDirsOutput :: Monad m => App m String
-absoluteDirsOutput = do
+-- | Return all relative directories to be protected.
+relativeDirsOutput :: Monad m => App m String
+relativeDirsOutput = do
   theDoc <- asks doc
-  separateBlocks <$> traverse absoluteDirInfo (dirs theDoc)
+  separateBlocks <$> traverse relativeDirInfo (dirs theDoc)
 
-absoluteDirInfo :: Monad m => DirInfo -> App m String
-absoluteDirInfo info = do
+relativeDirInfo :: Monad m => DirInfo -> App m String
+relativeDirInfo info = do
   ds <- generateDirectives info
-  theDoc <- asks doc
-  return $ separateBlocks (absoluteDir theDoc <$> ds)
+  return $ separateBlocks (realDir <$> ds)

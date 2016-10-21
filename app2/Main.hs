@@ -11,7 +11,7 @@ import Data.Yaml (decodeFileEither)
 import Pipes
 import qualified Pipes.Prelude as P
 
-import GenerateConf (AppConfig(..), absoluteDirsOutput)
+import GenerateConf (AppConfig(..), relativeDirsOutput)
 
 main :: IO ()
 main = getArgs >>= runOnArgs
@@ -25,7 +25,7 @@ runOnArgs [inputFile, outputFile] = do
       hPutStrLn stderr $ "YAML parse error: " ++ show e
     Right theDoc ->
       let config = AppConfig theDoc doesDirectoryExist
-      in runEffect (runReaderT absoluteDirsOutput config >->
+      in runEffect (runReaderT relativeDirsOutput config >->
                     P.toHandle stderr) >>=
          writeFile outputFile
 runOnArgs _ = do
