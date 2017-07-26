@@ -1,8 +1,13 @@
+-- This file has been generated from package.yaml by hpack version 0.17.1.
+--
+-- see: https://github.com/sol/hpack
+
 name:                httpd-protection-generator
 version:             0.1.0.0
 synopsis:            Generate httpd protection directives
 description:         Generate httpd protection directives
-homepage:            https://github.com/TalkBank/httpd-protection-generator
+homepage:            https://github.com/TalkBank/httpd-protection-generator#readme
+bug-reports:         https://github.com/TalkBank/httpd-protection-generator/issues
 license:             BSD3
 license-file:        LICENSE
 author:              Franklin Chen
@@ -10,60 +15,74 @@ maintainer:          franklinchen@franklinchen.com
 copyright:           Franklin Chen
 category:            Configuration
 build-type:          Simple
-extra-source-files:  README.md
-cabal-version:       >=1.10
-tested-with:         GHC == 7.10.3
+cabal-version:       >= 1.10
+
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/TalkBank/httpd-protection-generator
 
 library
-  default-language:    Haskell2010
-  hs-source-dirs:      src
-  ghc-options:         -Wall
-  exposed-modules:     GenerateConf
-  build-depends:       base >= 4 && <= 5
-                     , text
-                     , directory
-                     , yaml
-                     , pipes >= 4.1.7
-                     , mtl
+  default-language: Haskell2010
+  hs-source-dirs:
+      src
+  ghc-options: -Wall
+  exposed-modules:
+      GenerateConf
+  other-modules:
+      Paths_httpd_protection_generator
+  build-depends:
+      base >=4 && <=5
+    , yaml
+    , mtl
+    , pipes >=4.1.7
+    , text
+    , directory
 
 executable generate-httpd-protections
-  hs-source-dirs:      app
-  main-is:             Main.hs
-  default-language:    Haskell2010
-  ghc-options:         -Wall
-  build-depends:       base >= 4 && <= 5
-                     , httpd-protection-generator
-                     , directory
-                     , yaml
-                     , pipes
-                     , mtl
+  hs-source-dirs:
+      app
+  main-is: Main.hs
+  default-language: Haskell2010
+  ghc-options: -Wall
+  build-depends:
+      base >=4 && <=5
+    , yaml
+    , mtl
+    , pipes >=4.1.7
+    , httpd-protection-generator
+    , directory
 
 executable show-httpd-protections
-  hs-source-dirs:      app2
-  main-is:             Main.hs
-  default-language:    Haskell2010
-  ghc-options:         -Wall
-  build-depends:       base >= 4 && <= 5
-                     , httpd-protection-generator
-                     , directory
-                     , yaml
-                     , pipes
-                     , mtl
+  hs-source-dirs:
+      app2
+  main-is: Main.hs
+  default-language: Haskell2010
+  ghc-options: -Wall
+  build-depends:
+      base >=4 && <=5
+    , yaml
+    , mtl
+    , pipes >=4.1.7
+    , httpd-protection-generator
+    , directory
 
 test-suite spec
   type: exitcode-stdio-1.0
-  default-language:    Haskell2010
-  hs-source-dirs:      test
-  ghc-options:         -Wall
-  main-is:             Spec.hs
-  build-depends:       base >= 4 && <= 5
-                     , httpd-protection-generator
-                     , hspec
-                     , QuickCheck
-                     , yaml
-                     , pipes
-                     , mtl
-
-source-repository head
-  type:                 git
-  location:             https://github.com/TalkBank/httpd-protection-generator
+  default-language: Haskell2010
+  hs-source-dirs:
+      test
+  ghc-options: -Wall
+  main-is: Spec.hs
+  build-depends:
+      base >=4 && <=5
+    , yaml
+    , mtl
+    , pipes >=4.1.7
+    , httpd-protection-generator
+    , hspec
+    , QuickCheck
+  other-modules:
+      GenerateConfSpec

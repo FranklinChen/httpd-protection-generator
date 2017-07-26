@@ -1,0 +1,46 @@
+name: httpd-protection-generator
+version: '0.1.0.0'
+synopsis: Generate httpd protection directives
+description: Generate httpd protection directives
+category: Configuration
+author: Franklin Chen
+maintainer: franklinchen@franklinchen.com
+copyright: Franklin Chen
+license: BSD3
+github: TalkBank/httpd-protection-generator
+extra-source-files:
+- README.md
+ghc-options: -Wall
+dependencies:
+- base >=4 && <=5
+- yaml
+- mtl
+- pipes >=4.1.7
+library:
+  source-dirs: src
+  exposed-modules:
+  - GenerateConf
+  dependencies:
+  - text
+  - directory
+executables:
+  generate-httpd-protections:
+    main: Main.hs
+    source-dirs: app
+    dependencies:
+    - httpd-protection-generator
+    - directory
+  show-httpd-protections:
+    main: Main.hs
+    source-dirs: app2
+    dependencies:
+    - httpd-protection-generator
+    - directory
+tests:
+  spec:
+    main: Spec.hs
+    source-dirs: test
+    dependencies:
+    - httpd-protection-generator
+    - hspec
+    - QuickCheck
