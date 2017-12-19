@@ -1,6 +1,8 @@
--- This file has been generated from package.yaml by hpack version 0.17.1.
+-- This file has been generated from package.yaml by hpack version 0.20.0.
 --
 -- see: https://github.com/sol/hpack
+--
+-- hash: 871d0aeea2d28ff77f4d23b0650248d48687851d7a94fda8e1f4aaa296531543
 
 name:                httpd-protection-generator
 version:             0.1.0.0
@@ -35,11 +37,11 @@ library
       Paths_httpd_protection_generator
   build-depends:
       base >=4 && <=5
-    , yaml
+    , directory
     , mtl
     , pipes >=4.1.7
     , text
-    , directory
+    , yaml
 
 executable generate-httpd-protections
   hs-source-dirs:
@@ -49,11 +51,13 @@ executable generate-httpd-protections
   ghc-options: -Wall
   build-depends:
       base >=4 && <=5
-    , yaml
+    , directory
+    , httpd-protection-generator
     , mtl
     , pipes >=4.1.7
-    , httpd-protection-generator
-    , directory
+    , yaml
+  other-modules:
+      Paths_httpd_protection_generator
 
 executable show-httpd-protections
   hs-source-dirs:
@@ -63,11 +67,13 @@ executable show-httpd-protections
   ghc-options: -Wall
   build-depends:
       base >=4 && <=5
-    , yaml
+    , directory
+    , httpd-protection-generator
     , mtl
     , pipes >=4.1.7
-    , httpd-protection-generator
-    , directory
+    , yaml
+  other-modules:
+      Paths_httpd_protection_generator
 
 test-suite spec
   type: exitcode-stdio-1.0
@@ -77,12 +83,13 @@ test-suite spec
   ghc-options: -Wall
   main-is: Spec.hs
   build-depends:
-      base >=4 && <=5
-    , yaml
+      QuickCheck
+    , base >=4 && <=5
+    , hspec
+    , httpd-protection-generator
     , mtl
     , pipes >=4.1.7
-    , httpd-protection-generator
-    , hspec
-    , QuickCheck
+    , yaml
   other-modules:
       GenerateConfSpec
+      Paths_httpd_protection_generator
