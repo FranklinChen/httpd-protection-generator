@@ -30,7 +30,7 @@ matrix:
   # https://github.com/hvr/multi-ghc-travis
   # The Stack builds. We can pass in arbitrary Stack arguments via the ARGS
   # variable, such as using --stack-yaml to point to a different file.
-  - env: BUILD=stack ARGS="--resolver lts-10"
+  - env: BUILD=stack ARGS="--resolver lts-11"
     compiler: ": #stack 8.2.2"
     addons: {apt: {packages: [ghc-8.2.2], sources: [hvr-ghc]}}
 
@@ -40,7 +40,7 @@ matrix:
     addons: {apt: {packages: [libgmp-dev]}}
 
   # Build on OS X in addition to Linux
-  - env: BUILD=stack ARGS="--resolver lts-10"
+  - env: BUILD=stack ARGS="--resolver lts-11"
     compiler: ": #stack 8.2.2 osx"
     os: osx
 

@@ -2,22 +2,22 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 871d0aeea2d28ff77f4d23b0650248d48687851d7a94fda8e1f4aaa296531543
+-- hash: 838f42ad0f5d8bb0432e9ff05dac2d0226c2ddb39612619a34f1b4b7d9596093
 
-name:                httpd-protection-generator
-version:             0.1.0.0
-synopsis:            Generate httpd protection directives
-description:         Generate httpd protection directives
-homepage:            https://github.com/TalkBank/httpd-protection-generator#readme
-bug-reports:         https://github.com/TalkBank/httpd-protection-generator/issues
-license:             BSD3
-license-file:        LICENSE
-author:              Franklin Chen
-maintainer:          franklinchen@franklinchen.com
-copyright:           Franklin Chen
-category:            Configuration
-build-type:          Simple
-cabal-version:       >= 1.10
+name:           httpd-protection-generator
+version:        0.1.0.0
+synopsis:       Generate httpd protection directives
+description:    Generate httpd protection directives
+category:       Configuration
+homepage:       https://github.com/TalkBank/httpd-protection-generator#readme
+bug-reports:    https://github.com/TalkBank/httpd-protection-generator/issues
+author:         Franklin Chen
+maintainer:     franklinchen@franklinchen.com
+copyright:      Franklin Chen
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
 
 extra-source-files:
     README.md
@@ -27,14 +27,9 @@ source-repository head
   location: https://github.com/TalkBank/httpd-protection-generator
 
 library
-  default-language: Haskell2010
   hs-source-dirs:
       src
   ghc-options: -Wall
-  exposed-modules:
-      GenerateConf
-  other-modules:
-      Paths_httpd_protection_generator
   build-depends:
       base >=4 && <=5
     , directory
@@ -42,12 +37,16 @@ library
     , pipes >=4.1.7
     , text
     , yaml
+  exposed-modules:
+      GenerateConf
+  other-modules:
+      Paths_httpd_protection_generator
+  default-language: Haskell2010
 
 executable generate-httpd-protections
+  main-is: Main.hs
   hs-source-dirs:
       app
-  main-is: Main.hs
-  default-language: Haskell2010
   ghc-options: -Wall
   build-depends:
       base >=4 && <=5
@@ -58,12 +57,12 @@ executable generate-httpd-protections
     , yaml
   other-modules:
       Paths_httpd_protection_generator
+  default-language: Haskell2010
 
 executable show-httpd-protections
+  main-is: Main.hs
   hs-source-dirs:
       app2
-  main-is: Main.hs
-  default-language: Haskell2010
   ghc-options: -Wall
   build-depends:
       base >=4 && <=5
@@ -74,14 +73,14 @@ executable show-httpd-protections
     , yaml
   other-modules:
       Paths_httpd_protection_generator
+  default-language: Haskell2010
 
 test-suite spec
   type: exitcode-stdio-1.0
-  default-language: Haskell2010
+  main-is: Spec.hs
   hs-source-dirs:
       test
   ghc-options: -Wall
-  main-is: Spec.hs
   build-depends:
       QuickCheck
     , base >=4 && <=5
@@ -93,3 +92,4 @@ test-suite spec
   other-modules:
       GenerateConfSpec
       Paths_httpd_protection_generator
+  default-language: Haskell2010
